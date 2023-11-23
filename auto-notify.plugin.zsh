@@ -35,6 +35,11 @@ function _auto_notify_format() {
     printf "%s" "$MESSAGE"
 }
 
+function _get_running_app_darwin() {
+    APP="$(osascript -e 'tell application "System Events" to name of first process whose frontmost is true')"
+    printf "%s" "$APP"
+}
+
 function _auto_notify_message() {
     local command="$1"
     local elapsed="$2"
@@ -71,6 +76,11 @@ function _auto_notify_message() {
         notify-send ${arguments[@]}
 
     elif [[ "$platform" == "Darwin" ]]; then
+        running_app="$(_get_running_app_darwin)"
+        if [[ "$running_app" == "Terminal" || "$running_app" == "iTerm2" ]]; then
+            # Don't show notifications when terminal is in focus.
+            return
+        fi
         osascript \
           -e 'on run argv' \
           -e 'display notification (item 1 of argv) with title (item 2 of argv)' \
