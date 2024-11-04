@@ -5,8 +5,7 @@ export AUTO_NOTIFY_VERSION="0.10.2"
     export AUTO_NOTIFY_EXPIRE_TIME=8000
 # Threshold in seconds for when to automatically show a notification
 [[ -z "$AUTO_NOTIFY_THRESHOLD" ]] &&
-    export AUTO_NOTIFY_THRESHOLD=10
-
+    export AUTO_NOTIFY_THRESHOLD=2
 # List of commands/programs to ignore sending notifications for
 [[ -z "$AUTO_NOTIFY_IGNORE" ]] &&
     export AUTO_NOTIFY_IGNORE=(
